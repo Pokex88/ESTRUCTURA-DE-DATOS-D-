@@ -1,0 +1,108 @@
+using System;
+
+namespace AgendaTelefonicaPOO
+{
+    // ===== REGISTRO (CLASE CONTACTO) =====
+    class Contacto
+    {
+        public int Id;
+        public string Nombre;
+        public string Direccion;
+
+        // VECTOR de teléfonos
+        public string[] Telefonos;
+
+        public Contacto(int id, string nombre, string direccion, string[] telefonos)
+        {
+            Id = id;
+            Nombre = nombre;
+            Direccion = direccion;
+            Telefonos = telefonos;
+        }
+
+        public void Mostrar()
+        {
+            Console.WriteLine("ID: " + Id);
+            Console.WriteLine("Nombre: " + Nombre);
+            Console.WriteLine("Dirección: " + Direccion);
+            Console.WriteLine("Teléfonos:");
+            foreach (string tel in Telefonos)
+            {
+                Console.WriteLine(" - " + tel);
+            }
+            Console.WriteLine("----------------------------");
+        }
+    }
+
+    // ===== ESTRUCTURA PRINCIPAL (AGENDA) =====
+    class Agenda
+    {
+        // VECTOR de objetos Contacto
+        private Contacto[] contactos;
+        private int contador;
+
+        public Agenda(int tamaño)
+        {
+            contactos = new Contacto[tamaño];
+            contador = 0;
+        }
+
+        public void Agregar(Contacto contacto)
+        {
+            if (contador < contactos.Length)
+            {
+                contactos[contador] = contacto;
+                contador++;
+            }
+            else
+            {
+                Console.WriteLine("Agenda llena.");
+            }
+        }
+
+        public void MostrarTodos()
+        {
+            for (int i = 0; i < contador; i++)
+            {
+                contactos[i].Mostrar();
+            }
+        }
+    }
+
+    // ===== PROGRAMA PRINCIPAL =====
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // MATRIZ de códigos (país / área)
+            string[,] codigos = new string[,]
+            {
+                { "593", "02" }, // Quito
+                { "593", "04" }  // Guayaquil
+            };
+
+            Agenda agenda = new Agenda(5);
+
+            // VECTOR de teléfonos
+            string[] telefonos1 = new string[]
+            {
+                "+" + codigos[0,0] + " " + codigos[0,1] + " 1234567",
+                "+593 0998765432"
+            };
+
+            Contacto c1 = new Contacto(
+                1,
+                "Juan Pérez",
+                "Av. Central",
+                telefonos1
+            );
+
+            agenda.Agregar(c1);
+
+            Console.WriteLine("=== AGENDA TELEFÓNICA ===");
+            agenda.MostrarTodos();
+
+            Console.ReadKey();
+        }
+    }
+}
