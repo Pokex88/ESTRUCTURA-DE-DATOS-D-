@@ -1,0 +1,112 @@
+using System;
+
+class Nodo
+{
+    public int dato;
+    public Nodo siguiente;
+
+    public Nodo(int dato)
+    {
+        this.dato = dato;
+        this.siguiente = null;
+    }
+}
+
+class ListaEnlazada
+{
+    private Nodo cabeza;
+
+    public ListaEnlazada()
+    {
+        cabeza = null;
+    }
+
+    // Insertar al final
+    public void Insertar(int dato)
+    {
+        Nodo nuevo = new Nodo(dato);
+
+        if (cabeza == null)
+        {
+            cabeza = nuevo;
+        }
+        else
+        {
+            Nodo actual = cabeza;
+            while (actual.siguiente != null)
+            {
+                actual = actual.siguiente;
+            }
+            actual.siguiente = nuevo;
+        }
+    }
+
+    // EJERCICIO 1: Contar elementos de la lista
+    public int ContarElementos()
+    {
+        int contador = 0;
+        Nodo actual = cabeza;
+
+        while (actual != null)
+        {
+            contador++;
+            actual = actual.siguiente;
+        }
+
+        return contador;
+    }
+
+    // EJERCICIO 2: Invertir la lista enlazada
+    public void InvertirLista()
+    {
+        Nodo anterior = null;
+        Nodo actual = cabeza;
+        Nodo siguiente = null;
+
+        while (actual != null)
+        {
+            siguiente = actual.siguiente;
+            actual.siguiente = anterior;
+            anterior = actual;
+            actual = siguiente;
+        }
+
+        cabeza = anterior;
+    }
+
+    // Mostrar lista
+    public void Mostrar()
+    {
+        Nodo actual = cabeza;
+        while (actual != null)
+        {
+            Console.Write(actual.dato + " -> ");
+            actual = actual.siguiente;
+        }
+        Console.WriteLine("null");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ListaEnlazada lista = new ListaEnlazada();
+
+        lista.Insertar(10);
+        lista.Insertar(20);
+        lista.Insertar(30);
+        lista.Insertar(40);
+
+        Console.WriteLine("Lista original:");
+        lista.Mostrar();
+
+        Console.WriteLine("\nNúmero de elementos en la lista:");
+        Console.WriteLine(lista.ContarElementos());
+
+        lista.InvertirLista();
+
+        Console.WriteLine("\nLista invertida:");
+        lista.Mostrar();
+    }
+}
