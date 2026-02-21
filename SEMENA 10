@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{ static void Main()
+{
+// 1. Crear conjunto universal de 500 ciudadanos
+HashSet<int> ciudadanos = new HashSet<int>();
+for (int i = 1; i <= 500; i++)
+  {
+  ciudadanos.Add(i);
+  }
+
+   // 2. Crear conjunto ficticio de 75 vacunados con Pfizer
+HashSet<int> pfizer = new HashSet<int>();
+Random random = new Random();
+
+while (pfizer.Count < 75)
+ {
+  int id = random.Next(1, 501);
+  pfizer.Add(id);}
+
+ // 3. Crear conjunto ficticio de 75 vacunados con AstraZeneca
+HashSet<int> astraZeneca = new HashSet<int>();
+
+while (astraZeneca.Count < 75)
+{
+int id = random.Next(1, 501);
+astraZeneca.Add(id);
+}
+// 4. Operaciones de teoría de conjuntos
+
+ // Unión (P ∪ A)
+HashSet<int> union = new HashSet<int>(pfizer);
+union.UnionWith(astraZeneca);
+
+// Intersección (P ∩ A) → ambas dosis
+        HashSet<int> ambasDosis = new HashSet<int>(pfizer);
+       ambasDosis.IntersectWith(astraZeneca);
+
+// Solo Pfizer (P - A)
+        HashSet<int> soloPfizer = new HashSet<int>(pfizer);
+        soloPfizer.ExceptWith(astraZeneca);
+
+// Solo AstraZeneca (A - P)
+HashSet<int> soloAstra = new HashSet<int>(astraZeneca);
+ soloAstra.ExceptWith(pfizer);
+
+// No vacunados U - (P ∪ A)
+ HashSet<int> noVacunados = new HashSet<int>(ciudadanos);
+  noVacunados.ExceptWith(union);
+
+        // 5. Mostrar resultados
+Console.WriteLine("Total ciudadanos: " + ciudadanos.Count);
+ Console.WriteLine("Vacunados con Pfizer: " + pfizer.Count);
+Console.WriteLine("Vacunados con AstraZeneca: " + astraZeneca.Count);
+ Console.WriteLine("Ambas dosis: " + ambasDosis.Count);
+  Console.WriteLine("Solo Pfizer: " + soloPfizer.Count);
+   Console.WriteLine("Solo AstraZeneca: " + soloAstra.Count);
+ Console.WriteLine("No vacunados: " + noVacunados.Count);
+ }
+}
